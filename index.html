@@ -68,7 +68,7 @@ const R=(a,b)=>a+Math.random()*(b-a),pick=a=>a[Math.random()*a.length|0],cl=(v,a
 const store={get(){try{return+localStorage.getItem('zsc_best')||0}catch(e){return 0}},set(v){try{localStorage.setItem('zsc_best',v)}catch(e){}}};
 let best=store.get(),S='menu',paused=false,mute=false,G,Z,last=0,bgx=0,shown=false,rec=false,sIdx=0,sDone=0;
 const K={l:0,r:0,d:0,b:0};
-const STORY="জারিফের একদিন খুব খিদে পেয়েছিল। সে একটা সামুচা দোকানে গেল। দোকানি একটা গরম গরম সামুচা ঠান্ডা হতে দিতেই, জারিফ চুপচাপ একটা সামুচা তুলে নিয়ে দৌড় দিল! তারপর সামুচা দোকানদার শোভন চিৎকার দিল, ‘ওওই! আমার সামুচা কে নিয়ে গেলি!’ এবার শোভন পিছে পিছে দৌড়াতে থাকবে, জারিফকে ধরার জন্য আর রাস্তার মধ্যে অনেক মজার বাধা থাকবে। জারিফকে বাঁচতে হবে, সামুচা নিয়ে দৌড়াতে হবে, আর ধরা খাওয়া থেকে বাঁচতে হবে।";
+const STORY="জারিফের একদিন খুব খিদে পেয়েছিল। সে একটা সামুচা দোকানে গেল। দোকানি একটা গরম গরম সামুচা ঠান্ডা হতে দিতেই, জারিফ চুপচাপ একটা সামুচা তুলে নিয়ে দৌড় দিল! তারপর সামুচা দোকানদার শোভন চিৎকার দিল, ‘ওওই! আমার সামুচা কে নিয়ে গেলি!’ এবার শোভন পিছে পিছে দৌড়াতে থাকবে, আর জারিফকে ধরার জন্য রাস্তার মধ্যে অনেক মজার বাধা থাকবে। জারিফকে বাঁচতে হবে, সামুচা নিয়ে দৌড়াতে হবে, আর ধরা খাওয়া থেকে বাঁচতে হবে।";
 // grapheme-safe typewriter so Bengali conjuncts never break mid-letter
 const SG=window.Intl&&Intl.Segmenter?Array.from(new Intl.Segmenter('bn',{granularity:'grapheme'}).segment(STORY),s=>s.segment):Array.from(STORY);
 const STORY_ROMAN="Zarif ekdin khub khide peyechilo. Se ekta samucha dokane gelo. Dukani ekta gorom gorom samucha thanda hote ditei, Zarif chupchap ekta samucha tule niye dour dilo! Tarpor samucha dokandar cheekh dilo, 'Oooi! Amar samucha ke koi niye gelos!' Ebar dokandar pise pise dourote thakbe, ar Zarif ke dorar jonno rastar moddhe anek funny obstacle thakbe. Zarif ke bachte hobe, samucha niye dourate hobe, ar dhora khawa theke bachte hobe.";
@@ -347,11 +347,14 @@ if(G.pw.mag>0){X.strokeStyle='rgba(239,71,111,.35)';X.setLineDash([6,8]);X.begin
 // fx
 for(const f of G.fx){if(f.t){X.globalAlpha=Math.min(1,f.l*1.5);X.font='bold 22px "Trebuchet MS"';X.textAlign='center';X.textBaseline='alphabetic';X.lineWidth=4;X.strokeStyle='#3a1c00';const hw=X.measureText(f.t).width/2+10,fx=cl(f.x,hw,W-hw),fy=Math.max(f.y,40);X.strokeText(f.t,fx,fy);X.fillStyle=f.c;X.fillText(f.t,fx,fy)}else{X.globalAlpha=Math.min(1,f.l*2);circ(f.x,f.y,f.r,f.c)}X.globalAlpha=1}
 // speech bubble
-if(G.bub&&S=='play'){const b=G.bub,hx=b.who=='d'?dx:Z.x;X.font='bold 18px "Trebuchet MS"';X.textAlign='center';X.textBaseline='alphabetic';
-const m=X.measureText(b.txt),asc=m.actualBoundingBoxAscent||18,des=m.actualBoundingBoxDescent||6,w=Math.min(W-24,m.width+34),h=asc+des+20,by=b.who=='z'?Math.min(GY-150,GY-Z.y-132):GY-150,cx=cl(hx+(b.who=='d'?w/3:0),w/2+10,W-w/2-10),tx=cl(hx,cx-w/2+16,cx+w/2-16);
+if(G.bub&&S=='play'){const b=G.bub,hx=b.who=='d'?dx:Z.x;let fs=18,m;
+// text is left-aligned and centred by hand (no textAlign/maxWidth), so box and text always use the same measured width
+X.textAlign='left';X.textBaseline='alphabetic';
+for(;;){X.font='bold '+fs+'px "Trebuchet MS"';m=X.measureText(b.txt);if(m.width<=W-80||fs<=11)break;fs--}
+const tw=m.width,asc=m.actualBoundingBoxAscent||fs,des=m.actualBoundingBoxDescent||fs/3,w=tw+44,h=asc+des+24,by=b.who=='z'?Math.min(GY-150,GY-Z.y-132):GY-150,cx=cl(hx+(b.who=='d'?w/3:0),w/2+10,W-w/2-10),tx=cl(hx,cx-w/2+16,cx+w/2-16);
 X.fillStyle='#fff';X.strokeStyle='#3a1c00';X.lineWidth=3;X.beginPath();X.roundRect(cx-w/2,by-h,w,h,12);X.fill();X.stroke();
 X.beginPath();X.moveTo(tx-7,by-1);X.lineTo(tx,by+14);X.lineTo(tx+8,by-1);X.fill();
-X.fillStyle='#3a1c00';X.fillText(b.txt,cx,by-h+10+asc,w-20)}
+X.fillStyle='#3a1c00';X.fillText(b.txt,cx-tw/2,by-h+12+asc)}
 X.restore()}
 function bar(x,y,w,h,r,c){X.fillStyle='rgba(0,0,0,.45)';X.fillRect(x,y,w,h);X.fillStyle=c;X.fillRect(x,y,w*cl(r,0,1),h)}
 function hud(){const g=G;X.fillStyle='rgba(30,14,4,.62)';X.beginPath();X.roundRect(10,10,830,50,14);X.fill();
