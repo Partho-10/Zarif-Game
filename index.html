@@ -183,7 +183,7 @@ let SKY;const mkSky=()=>mk(W,H,g=>{const q=g.createLinearGradient(0,0,0,400);q.a
 SKY=mkSky();
 const FAR=mk(1920,260,g=>{let x=0;const cs=['#a9c4d6','#b8cfc0','#d6bfa9','#c4b5d6'];while(x<1920){const w=Math.min(R(70,130)|0,1920-x),h=R(120,240)|0;g.fillStyle=cs[(x/7|0)%4];g.fillRect(x,260-h,w,h);g.fillStyle='rgba(255,255,255,.4)';for(let yy=260-h+12;yy<250;yy+=22)for(let xx=x+10;xx<x+w-12;xx+=22)g.fillRect(xx,yy,9,12);x+=w}});
 const mkShops=()=>mk(1920,300,g=>{
-const defs=[['সামুচা ঘর','#d62828','#fcbf49','🥟','#e8d5b5'],['রাজু চা স্টল','#2a9d8f','#e9c46a','🍵','#f1c9a0'],['মুদি দোকান','#3a86ff','#ffd166','🛒','#cfe0c3'],['বিসমিল্লাহ ফার্মেসি','#6a994e','#f2e8cf','💊','#e7c6c6']];
+const defs=[['নজির মামার ভাতের হোটেল','#d62828','#fcbf49','🍚','#e8d5b5'],['বাউট ক্যাফে','#2a9d8f','#e9c46a','🍵','#f1c9a0'],['মাল মোস্তফা','#3a86ff','#ffd166','🍛','#cfe0c3'],['রংধনু','#6a994e','#f2e8cf','☕','#e7c6c6']];
 defs.forEach((d,i)=>{const x=i*480;g.fillStyle=d[4];g.fillRect(x+10,40,460,260);g.fillStyle='rgba(0,0,0,.18)';g.fillRect(x+10,40,460,8);
 g.fillStyle=d[1];g.fillRect(x+30,52,420,50);g.fillStyle='#fff';g.font='bold 30px "Hind Siliguri","Noto Sans Bengali","Nirmala UI","Trebuchet MS",sans-serif';g.textAlign='center';g.textBaseline='alphabetic';g.fillText(d[0],x+240,87,390);
 for(let k=0;k<10;k++){g.fillStyle=k%2?d[2]:d[1];g.beginPath();g.moveTo(x+30+k*42,108);g.lineTo(x+72+k*42,108);g.lineTo(x+72+k*42,132);g.quadraticCurveTo(x+51+k*42,146,x+30+k*42,132);g.fill()}
@@ -414,7 +414,7 @@ if(dt>.03)slowN++;else if(slowN>0)slowN--;if(slowN>120&&!lowQ&&DPR>1){lowQ=1;fit
 const pl=S=='play'&&!paused;if(gEl.classList.contains('play')!==pl)gEl.classList.toggle('play',pl);
 X.setTransform(DPR,0,0,DPR,0,0);
 if(!paused){if(S=='play')update(dt);else if(S=='over')updOver(dt);else{updDemo(dt);
-if(S=='story'){sIdx=Math.min(SG.length,sIdx+dt*38);const n=sIdx|0;$('st').textContent=SG.slice(0,n).join('');if(n>=SG.length){sDone+=dt;if(sDone>3.2)begin()}}}}
+if(S=='story'){sIdx=Math.min(SG.length,sIdx+dt*38);const n=sIdx|0;$('st').textContent=SG.slice(0,n).join('');if(n>=SG.length){sDone+=dt;if(sDone>7)begin()}}}}
 drawWorld();
 if(S=='menu'||S=='story'){X.save();X.translate(0,0);X.restore()}
 if(S=='play'||S=='over')hud();
