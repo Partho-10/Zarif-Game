@@ -185,7 +185,9 @@ const FAR=mk(1920,260,g=>{let x=0;const cs=['#a9c4d6','#b8cfc0','#d6bfa9','#c4b5
 const mkShops=()=>mk(1920,300,g=>{
 const defs=[['নজির মামার ভাতের হোটেল','#d62828','#fcbf49','🍚','#e8d5b5'],['বাউট ক্যাফে','#2a9d8f','#e9c46a','🍵','#f1c9a0'],['মাল মোস্তফা','#3a86ff','#ffd166','🍛','#cfe0c3'],['রংধনু','#6a994e','#f2e8cf','☕','#e7c6c6']];
 defs.forEach((d,i)=>{const x=i*480;g.fillStyle=d[4];g.fillRect(x+10,40,460,260);g.fillStyle='rgba(0,0,0,.18)';g.fillRect(x+10,40,460,8);
-g.fillStyle=d[1];g.fillRect(x+30,52,420,50);g.fillStyle='#fff';g.font='bold 30px "Hind Siliguri","Noto Sans Bengali","Nirmala UI","Trebuchet MS",sans-serif';g.textAlign='center';g.textBaseline='alphabetic';g.fillText(d[0],x+240,87,390);
+g.fillStyle=d[1];g.fillRect(x+30,52,420,50);g.fillStyle='#fff';g.textAlign='left';g.textBaseline='alphabetic';let fz=30,tw;
+for(;;){g.font='bold '+fz+'px "Hind Siliguri","Noto Sans Bengali","Nirmala UI","Trebuchet MS",sans-serif';tw=g.measureText(d[0]).width;if(tw<=380||fz<=14)break;fz--} // long names shrink to fit the signboard
+g.fillText(d[0],x+240-tw/2,77+fz*.33);
 for(let k=0;k<10;k++){g.fillStyle=k%2?d[2]:d[1];g.beginPath();g.moveTo(x+30+k*42,108);g.lineTo(x+72+k*42,108);g.lineTo(x+72+k*42,132);g.quadraticCurveTo(x+51+k*42,146,x+30+k*42,132);g.fill()}
 g.fillStyle='#4a3424';g.fillRect(x+40,140,400,160);g.fillStyle='#8d5a2b';g.fillRect(x+40,232,400,68);g.fillStyle='#a6713a';g.fillRect(x+40,232,400,8);
 g.font='36px serif';g.textAlign='left';g.fillText(d[3].repeat(5),x+50,226);
